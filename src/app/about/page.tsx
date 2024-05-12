@@ -1,9 +1,7 @@
-function About() {
+export default function About() {
     return ( 
         <>
-            About page
+            About page!
         </>
-     );
+     )
 }
-
-export default About;
