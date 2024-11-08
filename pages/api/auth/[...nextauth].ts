@@ -17,18 +17,22 @@ export const authOptions: AuthOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string
     }),
     CredentialsProvider({
-      name: 'credentials',
+      name: 'Credentials',
 
       credentials: {
-        email: { label: 'email', type: 'text' },
-        password: { label: 'password', type: 'password' }
+        email: {
+          label: "Email",
+          type: "text",
+          placeholder: "jsmith",
+        },
+        password: {label: "Password", type: "password"},
       },
       async authorize(credentials, req) {
         if (!credentials?.email || !credentials?.password) {
           throw new Error('Invalid credentials');
         }
 
-        const {email, password} = credentials
+        const {email, password} = credentials;
 
         const res = await fetch(`${Backend_URL}/auth/login`, {
           method: "POST",
@@ -47,8 +51,8 @@ export const authOptions: AuthOptions = {
           const errorData = await res.json();
           throw new Error(errorData.message || "Failed to log in"); 
       }
-        const data = await res.json();
-        return data
+        const user = await res.json();
+        return user;
       }
     })
   ],
@@ -58,10 +62,29 @@ export const authOptions: AuthOptions = {
   debug: process.env.NODE_ENV === 'development',
   session: {
     strategy: "jwt",
+    maxAge: 60 * 60
+  },
+  jwt: {
+    maxAge: 60 * 60
   },
   secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
+    async jwt({token, user}) {
+      if(user) {
+        return { ...token, ...user,};
+      }
+
+      return token
+    },
+
+    async session({token, session}) {
+      session.user = token.user;
+      session.backendTokens = token.backendTokens;
+
+      return session;
+    }
   }
+
 };
 
 export default NextAuth(authOptions);

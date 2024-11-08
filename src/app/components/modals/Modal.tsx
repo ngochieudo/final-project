@@ -95,6 +95,7 @@ const Modal: React.FC<ModalProps> = ({
           h-full 
           lg:h-auto
           md:h-auto
+          xl:h-5/6
           "
         >
           {/*content*/}

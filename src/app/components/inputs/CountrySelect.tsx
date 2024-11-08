@@ -19,7 +19,7 @@ const CountrySelect: React.FC<CountrySelectProps> = ({value, onChange}) => {
     const { getAll } = useCountries();
     
     return ( 
-        <div>
+        <div className='relative z-50'>
             <Select
                 placeholder='Anywhere'
                 isClearable
@@ -40,7 +40,7 @@ const CountrySelect: React.FC<CountrySelectProps> = ({value, onChange}) => {
                 classNames={{
                     control: () => 'p-3 border-2',
                     input: () => 'text-lg',
-                    option: () => 'text-lg'
+                    option: () => 'text-lg',
                 }}
                 theme={(theme) => ({
                     ...theme,

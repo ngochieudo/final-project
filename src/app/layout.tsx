@@ -1,42 +1,39 @@
+import "./globals.css";
+import type { Metadata } from "next";
+import { Nunito } from "next/font/google";
+import ToasterProvider from "./providers/ToasterProvider";
+import RegisterModal from "./components/modals/RegisterModal";
+import RentModal from "./components/modals/RentModal";
+import LoginModal from "./components/modals/LoginModal";
+import ClientOnly from "./components/ClientOnly";
 
-import './globals.css'
-import type { Metadata } from 'next'
-import { Nunito } from 'next/font/google'
-
-import Footer from './components/Footer'
-import Providers from './components/Providers'
-import ToasterProvider from './providers/ToasterProvider'
-import RegisterModal from './components/modals/RegisterModal'
-import RentModal from './components/modals/RentModal'
-import LoginModal from './components/modals/LoginModal'
 
 export const metadata: Metadata = {
-  title: 'Pep | Cho thuê chỗ ở',
-  description: 'Final project',
-}
+  title: "Pep | Booking website",
+  description: "Final project",
+};
 
 const font = Nunito({
-  subsets: ['latin'],
+  subsets: ["latin"],
 });
 
 export default async function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <html lang="en">
-      <body className={font.className}>
-        <Providers>
-        <ToasterProvider />
+      <body className={font.className} suppressHydrationWarning={true}>
+        <ClientOnly>
+          <ToasterProvider />
           <RegisterModal />
-          <RentModal/>
-          <LoginModal/>
-        <div>
-          {children}
-        </div>
-        </Providers>
+          <RentModal />
+          <LoginModal />
+          <div>{children}</div>
+          {/* <Footer/> */}
+        </ClientOnly>
       </body>
     </html>
-  )
+  );
 }

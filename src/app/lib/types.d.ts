@@ -3,10 +3,10 @@ export type User = {
     name: string;
     email: string;
     image?: string
-    password: string
     createdAt: Date     
     updatedAt: Date    
     favoriteIds: string[]
+    isAdmin: boolean
   };
 
 export type Listing = {
@@ -15,19 +15,22 @@ export type Listing = {
     description: string
     imageSrc: string
     createAt: string
-    category: string
+    categoryId: string
     roomCount: number
     bathroomCount: number
     guestCount: number
-    location: {
-      value: string
-        label: string
-        flag: string
-        latlng: number[]
-        region: string
-    }
+    locationValue: string
     price: number
+    isFavorited: boolean
 }
+
+export type Category = {
+  id: string;
+  label: string;
+  description: string;
+  icon: string;
+};
+
 
 export type Reservation = {
   id: string
@@ -37,4 +40,5 @@ export type Reservation = {
   endDate: Date
   totalPrice: number
   createdAt: Date
+  status: string
 }

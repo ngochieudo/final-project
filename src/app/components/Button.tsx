@@ -8,6 +8,7 @@ interface ButtonProps {
   disabled?: boolean;
   outline?: boolean;
   small?: boolean;
+  big?: boolean;
   icon?: IconType;
 }
 
@@ -16,6 +17,7 @@ const Button: React.FC<ButtonProps> = ({
   onClick, 
   disabled, 
   outline,
+  big,
   small,
   icon: Icon,
 }) => {
@@ -38,6 +40,8 @@ const Button: React.FC<ButtonProps> = ({
         ${small ? 'py-1' : 'py-3'}
         ${small ? 'font-light' : 'font-semibold'}
         ${small ? 'border-[1px]' : 'border-2'}
+        ${big ? 'p-8' : 'p-4'}
+        ${disabled ? 'bg-slate-500' : 'bg-blue-500'}
       `}
     >
       {Icon && (
@@ -50,7 +54,7 @@ const Button: React.FC<ButtonProps> = ({
           "
         />
       )}
-      {label}
+      {disabled ? 'Concluded' : label}
     </button>
    );
 }

@@ -1,6 +1,6 @@
 'use client';
 import { BiChart } from "react-icons/bi";
-import { FaUser } from "react-icons/fa";
+import { FaBook, FaUser } from "react-icons/fa";
 import { GiHouse, GiTalk } from "react-icons/gi";
 import { SidebarItem } from "./SidebarItem";
 const adminRoutes = [
@@ -10,24 +10,22 @@ const adminRoutes = [
         href: '/admin'
     },
     {
-        label: 'Listing Management',
+        label: 'Listing',
         icon: GiHouse,
         href: '/admin/listings'
     },
     {
-        label: 'User Management',
+        label: 'User',
         icon: FaUser,
         href: '/admin/users'
     },
     {
-        label: 'Post Management',
-        icon: GiTalk,
-        href: '/admin/posts'
+        label: 'Categories',
+        icon: FaBook,
+        href: '/admin/categories'
     }
 ]
 export const SidebarRoutes = () => {
-    
-
 
     return (
         <div className="

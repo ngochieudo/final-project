@@ -51,6 +51,7 @@ const LoginModal = () => {
 
       if (callback?.ok) {
         toast.success('Logged in succesful!');
+        
         router.refresh();
         loginModal.onClose();
       }
@@ -77,6 +78,9 @@ const LoginModal = () => {
         label="Email"
         disabled={isLoading}
         register={register}  
+        validationOptions={{
+          required: "Email is required",
+        }}
         errors={errors}
         required
       />
@@ -86,6 +90,9 @@ const LoginModal = () => {
         type="password"
         disabled={isLoading}
         register={register}
+        validationOptions={{
+          required: "Password is required"
+        }}
         errors={errors}
         required
       />

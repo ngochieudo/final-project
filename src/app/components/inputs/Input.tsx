@@ -3,7 +3,8 @@
 import { 
   FieldErrors, 
   FieldValues, 
-  UseFormRegister 
+  UseFormRegister, 
+  RegisterOptions 
 } from "react-hook-form";
 import { BiDollar } from "react-icons/bi";
 
@@ -14,8 +15,10 @@ interface InputProps {
   disabled?: boolean;
   formatPrice?: boolean;
   required?: boolean;
-  register: UseFormRegister<FieldValues>,
-  errors: FieldErrors
+  register: UseFormRegister<FieldValues>;
+  errors: FieldErrors;
+  validationOptions?: RegisterOptions;
+  textarea?: boolean;
 }
 
 const Input: React.FC<InputProps> = ({
@@ -27,10 +30,14 @@ const Input: React.FC<InputProps> = ({
   register,
   required,
   errors,
+  validationOptions,
+  textarea
 }) => {
+  const errorMessage = errors[id]?.message;
+
   return (
     <div className="w-full relative">
-      {formatPrice && (
+      {formatPrice && !textarea && (
         <BiDollar
           size={24}  
           className="
@@ -41,30 +48,62 @@ const Input: React.FC<InputProps> = ({
           "
         />
       )}
-      <input
-        id={id}
-        disabled={disabled}
-        {...register(id, { required })}
-        placeholder=" "
-        type={type}
-        className={`
-          peer
-          w-full
-          p-4
-          pt-6 
-          font-light 
-          bg-white 
-          border-2
-          rounded-md
-          outline-none
-          transition
-          disabled:opacity-70
-          disabled:cursor-not-allowed
-          ${formatPrice ? 'pl-9' : 'pl-4'}
-          ${errors[id] ? 'border-rose-500' : 'border-neutral-300'}
-          ${errors[id] ? 'focus:border-rose-500' : 'focus:border-black'}
-        `}
-      />
+      {textarea ? (
+        <textarea
+          id={id}
+          disabled={disabled}
+          {...register(id, {
+            ...validationOptions,
+            required: required ? `${label} is required` : validationOptions?.required
+          })}
+          placeholder=" "
+          className={`
+            peer
+            w-full
+            p-4
+            pt-6
+            font-light
+            bg-white
+            border-2
+            rounded-md
+            outline-none
+            transition
+            disabled:opacity-70
+            disabled:cursor-not-allowed
+            pl-4
+            ${errors[id] ? 'border-red-500' : 'border-neutral-300'}
+            ${errors[id] ? 'focus:border-red-500' : 'focus:border-black'}
+          `}
+        />
+      ) : (
+        <input
+          id={id}
+          disabled={disabled}
+          {...register(id, {
+            ...validationOptions,
+            required: required ? `${label} is required` : validationOptions?.required
+          })}
+          placeholder=" "
+          type={type}
+          className={`
+            peer
+            w-full
+            p-4
+            pt-6 
+            font-light 
+            bg-white 
+            border-2
+            rounded-md
+            outline-none
+            transition
+            disabled:opacity-70
+            disabled:cursor-not-allowed
+            ${formatPrice ? 'pl-9' : 'pl-4'}
+            ${errors[id] ? 'border-red-500' : 'border-neutral-300'}
+            ${errors[id] ? 'focus:border-red-500' : 'focus:border-black'}
+          `}
+        />
+      )}
       <label 
         className={`
           absolute 
@@ -80,13 +119,18 @@ const Input: React.FC<InputProps> = ({
           peer-placeholder-shown:translate-y-0 
           peer-focus:scale-75
           peer-focus:-translate-y-4
-          ${errors[id] ? 'text-rose-500' : 'text-zinc-400'}
+          ${errors[id] ? 'text-red-500' : 'text-zinc-400'}
         `}
       >
         {label}
       </label>
+      {errorMessage && typeof errorMessage === 'string' && (
+        <span className="text-red-500 text-sm">
+          {errorMessage}
+        </span>
+      )}
     </div>
-   );
+  );
 }
- 
+
 export default Input;

@@ -1,19 +1,22 @@
-'use client'
+"use client";
 import Container from "../Container";
 import Logo from "./Logo";
-import Search  from "./Search";
+import Search from "./Search";
 import UserMenu from "./UserMenu";
 import Categories from "./Categories";
 
-const Navbar= () => {
-    return (
-        <div className="fixed w-full bg-white z-10 shadow-sm">
-            <div className="
+const Navbar = () => {
+  return (
+    <div className="fixed w-full bg-white z-10 shadow-sm">
+      <div
+        className="
                 py-4
                 border-b-[1px]
-            ">
-                <Container>
-                    <div className="
+            "
+      >
+        <Container>
+          <div
+            className="
                         flex 
                         flex-row
                         items-center
@@ -21,17 +24,18 @@ const Navbar= () => {
                         gap-3
                         md:gap-0
                     "
-                    >
-                        <Logo />
-                        <Search />
-                        <UserMenu/>
-                    </div>
-                </Container>
+          >
+            <Logo />
+            <div className="md:w-[50%] w-full">
+              <Search />
             </div>
-            <Categories/>
-        </div>
-    )
-}
-
+            <UserMenu />
+          </div>
+        </Container>
+      </div>
+      <Categories />
+    </div>
+  );
+};
 
 export default Navbar;
